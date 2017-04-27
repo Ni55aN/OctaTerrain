@@ -21,6 +21,11 @@ struct vec3 {
   float &operator[](size_t i) { return a[i]; };
   vec3 operator+(vec3 b) { return vec3{a[0] + b[0], a[1] + b[1], a[2] + b[2]}; }
   vec3 operator/(float b) { return vec3{a[0] / b, a[1] / b, a[2] / b}; }
+  vec3 normalize(float len = 1) {
+    float d = (float)sqrt(pow(a[0], 2) + pow(a[1], 2) + pow(a[2], 2));
+    vec3 v = *this;
+    return v / (d * len);
+  }
 };
 
 struct vec9 {
@@ -119,17 +124,12 @@ private:
            currentChunksId.end();
   }
 
-  vec3 normalize(vec3 p) {
-    float d = (float)sqrt(pow(p[0], 2) + pow(p[1], 2) + pow(p[2], 2));
-    return vec3{p[0] / d * radius, p[1] / d * radius, p[2] / d * radius};
-  }
-
   void addChunk(vec3 &p1, vec3 &p2, vec3 &p3, int64_t id, bool divide = true,
                 bool positiveOriented = true) {
 
-    p1 = normalize(p1);
-    p2 = normalize(p2);
-    p3 = normalize(p3);
+    p1.normalize(radius);
+    p2.normalize(radius);
+    p3.normalize(radius);
 
     if (divide) {
       int z = getIdLevel(id);
