@@ -1,6 +1,18 @@
 language: cpp
 compiler: gcc
 
-install: true
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-6
+      - g++-6
 
-script: sh test.sh
+install:
+  - sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+  - sudo ln -s /usr/bin/g++-6 /usr/local/bin/g++
+
+script: 
+  - $CXX --version
+  - sh test.sh
