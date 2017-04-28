@@ -127,9 +127,9 @@ private:
   void addChunk(vec3 &p1, vec3 &p2, vec3 &p3, int64_t id, bool divide = true,
                 bool positiveOriented = true) {
 
-    p1.normalize(radius);
-    p2.normalize(radius);
-    p3.normalize(radius);
+    p1 = p1.normalize(radius);
+    p2 = p2.normalize(radius);
+    p3 = p3.normalize(radius);
 
     if (divide) {
       int z = getIdLevel(id);
