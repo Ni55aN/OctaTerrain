@@ -11,7 +11,7 @@ var Module = {
     });
   },
 };
-importScripts('main.js');
+importScripts('octaterrain.js');
 
 function vector2array(vector) {
   var arr = [];
