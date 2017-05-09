@@ -18,12 +18,12 @@ var EmWorker = function (url, onmessage) {
         onmessage(e.data);
     })
 
-    this.update = function (cameraPosition, current) {
+    this.update = function (view, current) {
         if (!this.pause && ready && !busy) {
             busy = true;
             w.postMessage({
                 cmd: 'generate',
-                camera: cameraPosition,
+                view: view,
                 current: current
             });
         }
@@ -47,7 +47,7 @@ function render() {
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
-    worker.update(camera.position.toArray(), currentChunks);
+    worker.update(camera.matrix.elements, currentChunks);
     document.getElementById("log").innerText =
         'Geometries: ' + renderer.info.memory.geometries +
         ', calls' + renderer.info.render.calls +

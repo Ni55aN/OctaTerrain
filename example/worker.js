@@ -35,10 +35,10 @@ self.addEventListener("message", function (e) {
   switch (e.data.cmd) {
     case 'generate':
       //console.time("ongenerate");
-      var v = e.data.camera;
+
       var current = array2vector(e.data.current);
 
-      terrain.generate(v[0], v[1], v[2], current);
+      terrain.generate(e.data.view, current);
 
       var added = terrain.getAdded();
       var removed = terrain.getRemoved();
