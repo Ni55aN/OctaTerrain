@@ -13,6 +13,7 @@
 #include "vec3.h"
 #include "vec9.h"
 #include "mat4.h"
+#include "frustum.h"
 
 class OctaTerrain {
 protected:
@@ -21,19 +22,21 @@ protected:
   float detail;
   bool saveVertices;
   bool progressive;
+  bool enableFrustum;
   std::vector<int64_t> currentChunksId;
   std::vector<int64_t> keepChunksId;
   std::vector<int64_t> addChunksId;
   std::vector<int64_t> removeChunksId;
   std::vector<vec9> addChunksVertices;
   vec3 cameraPosition;
+  Frustum frustum;
 
   float theta = M_PI / 2;
   float phi = M_PI / 2;
 
 public:
   OctaTerrain(float radius, int maxZ, float detail, bool saveVertices = false,
-              bool progressive = false) {
+              bool progressive = false, bool enableFrustum = true) {
     if (maxZ <= 0 || maxZ > 24) // need max 20
       maxZ = maxZ <= 0 ? 0 : 24;
 
@@ -43,6 +46,7 @@ public:
     this->cameraPosition = vec3{2 * radius, 0, 0};
     this->saveVertices = saveVertices;
     this->progressive = progressive;
+    this->enableFrustum = enableFrustum;
   }
 
   vec2 toLatLon(vec3 p) { return vec2{0, 0}; }
@@ -77,6 +81,10 @@ private:
   bool needDivide(vec3 &camera, vec3 &p1, vec3 &p2, vec3 &p3, int z) {
     vec3 center = getChunkCenter(p1, p2, p3);
     float boundRadius = boundingRadius(center, p1, p2, p3);
+
+    if (enableFrustum && !frustum.intersectSphere(center, boundRadius))
+      return false;
+
     return distance(camera, center) < boundRadius * detail;
   }
 
@@ -174,8 +182,9 @@ private:
   }
 
 public:
-  void generate(mat4 view, std::vector<int64_t> current) {
-    cameraPosition = view.getPosition();
+  void generate(vec3 position, mat4 view, std::vector<int64_t> current) {
+    cameraPosition = position;
+    frustum = Frustum(view);
     currentChunksId = current;
     addChunksId.clear();
     removeChunksId.clear();
