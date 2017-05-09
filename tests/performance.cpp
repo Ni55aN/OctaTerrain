@@ -10,7 +10,9 @@ int main(int argc, char *argv[]) {
   const clock_t begin_time = clock();
 
   std::vector<int64_t> current;
-  terrain->generate(0, 0, 1, current);
+  mat4 view = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1};
+
+  terrain->generate(view, current);
 
   auto added = terrain->getAdded().size();
   printf("----\nChunks: %lu with detail = %f\n", added, detail);

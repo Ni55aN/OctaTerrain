@@ -12,6 +12,7 @@
 #include "vec2.h"
 #include "vec3.h"
 #include "vec9.h"
+#include "mat4.h"
 
 class OctaTerrain {
 protected:
@@ -173,8 +174,8 @@ private:
   }
 
 public:
-  void generate(float x, float y, float z, std::vector<int64_t> current) {
-    cameraPosition = vec3{x, y, z};
+  void generate(mat4 view, std::vector<int64_t> current) {
+    cameraPosition = view.getPosition();
     currentChunksId = current;
     addChunksId.clear();
     removeChunksId.clear();

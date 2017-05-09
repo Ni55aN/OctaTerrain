@@ -1,3 +1,5 @@
+#pragma once
+
 struct vec3 {
   float a[3];
   float operator[](size_t i) const { return a[i]; };
