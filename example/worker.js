@@ -38,7 +38,7 @@ self.addEventListener("message", function (e) {
 
       var current = array2vector(e.data.current);
 
-      terrain.generate(e.data.view, current);
+      terrain.generate(e.data.position, e.data.view, current);
 
       var added = terrain.getAdded();
       var removed = terrain.getRemoved();

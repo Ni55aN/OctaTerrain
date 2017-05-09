@@ -18,11 +18,12 @@ var EmWorker = function (url, onmessage) {
         onmessage(e.data);
     })
 
-    this.update = function (view, current) {
+    this.update = function (position, view, current) {
         if (!this.pause && ready && !busy) {
             busy = true;
             w.postMessage({
                 cmd: 'generate',
+                position: position,
                 view: view,
                 current: current
             });
@@ -47,7 +48,10 @@ function render() {
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
-    worker.update(camera.matrix.elements, currentChunks);
+    camera.updateMatrix();
+    camera.updateMatrixWorld();
+    var vp = new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+    worker.update(camera.position.toArray(), vp.elements, currentChunks);
     document.getElementById("log").innerText =
         'Geometries: ' + renderer.info.memory.geometries +
         ', calls' + renderer.info.render.calls +
@@ -105,7 +109,7 @@ function onTerrainUpdate(data) {
 
 window.onload = function () {
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.00001, 1000);
+    camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.00001, 1000);
     scene.add(terrainMeshes);
     worker = new EmWorker("worker.js", onTerrainUpdate);
 

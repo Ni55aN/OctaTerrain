@@ -44,8 +44,8 @@ public:
 
   std::vector<vec9> getVertices() { return OctaTerrain::getVertices(); }
 
-  void generate(mat4 view, std::vector<ChunkId> current) {
-    OctaTerrain::generate(view, chunk2intVector(current));
+  void generate(vec3 position, mat4 view, std::vector<ChunkId> current) {
+    OctaTerrain::generate(position, view, chunk2intVector(current));
   }
 };
 
@@ -63,6 +63,11 @@ EMSCRIPTEN_BINDINGS(my_module) {
   value_array<ChunkId>("ChunkId")
       .element(&ChunkId::high)
       .element(&ChunkId::low);
+
+  value_array<vec3>("vec3")
+      .element(index<0>())
+      .element(index<1>())
+      .element(index<2>());
 
   value_array<vec9>("vec9")
       .element(index<0>())
