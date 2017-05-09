@@ -117,11 +117,6 @@ window.onload = function () {
     renderer.setClearColor(0x444444, 1);
     document.body.appendChild(renderer.domElement);
 
-    var spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.position.set(3, 7, 3);
-
-    scene.add(spotLight);
-
     var hemi = new THREE.HemisphereLight(0xbbbbbb, 0x808080, 0.6);
     scene.add(hemi);
 
