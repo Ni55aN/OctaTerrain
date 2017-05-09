@@ -5,14 +5,14 @@
 int main(int argc, char *argv[]) {
 
   float detail = atof(argv[1]);
-  auto terrain = new OctaTerrain(1, 20, detail, true);
+  auto terrain = new OctaTerrain(1, 20, detail, true, true);
 
   const clock_t begin_time = clock();
 
   std::vector<int64_t> current;
   mat4 view = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1};
 
-  terrain->generate(view, current);
+  terrain->generate(vec3{0, 1, 0}, view, current);
 
   auto added = terrain->getAdded().size();
   printf("----\nChunks: %lu with detail = %f\n", added, detail);
