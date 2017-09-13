@@ -1,3 +1,3 @@
-sudo docker exec cab9e6c5cee6 em++ src/bindings/em.cpp -o build/em/octaterrain.js -O1 --std=c++14 -Wall --bind -Wno-missing-braces -s EXPORT_NAME="'OctaTerrain'"
+sudo docker exec cab9e6c5cee6 em++ src/bindings/em.cpp -o build/em/octaterrain.js -O3 --memory-init-file 0 --std=c++14 -Wall --bind -Wno-missing-braces -s EXPORT_NAME="'OctaTerrain'"
 cd build/em
 cp ./octaterrain.js ../../example
