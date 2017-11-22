@@ -1,3 +1,2 @@
-build/em/*
-!build/em/.keep
+build
 .vscode

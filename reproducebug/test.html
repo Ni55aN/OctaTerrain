@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<script src="quick_example.js"></script>
+<script>
+    function vector2array(vector) {
+        var arr = [];
+        for (var i = 0; i < vector.size(); i++)
+            arr.push(vector.get(i));
+
+        return arr;
+    }
+    /*
+        console.log(vector2array(Module.test())[0]);
+        console.log(vector2array(Module.test_ptr())[0]);
+        console.log(vector2array(Module.test())[0]);*/
+
+    console.log(Module.getvec9());
+</script>
+
+</html>
