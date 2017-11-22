@@ -1,1 +1,0 @@
-sudo docker exec cab9e6c5cee6 emcc --bind -o reproducebug/quick_example.js reproducebug/em.cpp
