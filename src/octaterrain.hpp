@@ -51,11 +51,6 @@ public:
   std::vector<int64_t> getRemoved();
   std::vector<VerticesData> getVertices();
 
-private:
-  float boundingRadius(glm::vec3 &center, glm::vec3 &p1, glm::vec3 &p2, glm::vec3 &p3);
-
-  bool needDivide(glm::vec3 &camera, glm::vec3 &p1, glm::vec3 &p2, glm::vec3 &p3, int z);
-
   glm::vec3 getChunkCenter(glm::vec3 &p1, glm::vec3 &p2, glm::vec3 &p3);
 
   int64_t increaseIdLevel(int64_t id);
@@ -64,11 +59,17 @@ private:
   int64_t setIdSide(int side);
   int getIdSide(int64_t id);
   int64_t setIdIndex(int64_t id, int index);
+
+private:
+  float boundingRadius(glm::vec3 &center, glm::vec3 &p1, glm::vec3 &p2, glm::vec3 &p3);
+  bool needDivide(glm::vec3 &camera, glm::vec3 &p1, glm::vec3 &p2, glm::vec3 &p3, int z);
+
   bool existChunk(int64_t id);
 
   void addChunk(glm::vec3 &p1, glm::vec3 &p2, glm::vec3 &p3, int64_t id, bool divide = true, bool positiveOriented = true);
   void addSide(int id);
+  void clear();
 
 public:
-  void generate(glm::vec3 position, glm::mat4 view, std::vector<int64_t> current);
+  void generate(glm::vec3 position, glm::mat4 view, std::vector<int64_t> current = std::vector<int64_t>());
 };

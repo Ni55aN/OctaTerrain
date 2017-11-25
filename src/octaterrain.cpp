@@ -8,7 +8,6 @@ OctaTerrain::OctaTerrain(float radius, int maxZ, float detail, bool saveVertices
   this->radius = radius;
   this->maxZ = maxZ;
   this->detail = detail;
-  this->cameraPosition = glm::vec3(2 * radius, 0, 0);
   this->saveVertices = saveVertices;
   this->progressive = progressive;
   this->enableFrustum = enableFrustum;
@@ -129,6 +128,7 @@ void OctaTerrain::addChunk(glm::vec3 & p1, glm::vec3 & p2, glm::vec3 & p3, int64
       return;
     }
   }
+  
   if (existChunk(id))
     keepChunksId.push_back(id);
   else {
@@ -175,15 +175,20 @@ void OctaTerrain::addSide(int id) {
   addChunk(v1, v2, v3, setIdSide(id));
 }
 
-void OctaTerrain::generate(glm::vec3 position, glm::mat4 view, std::vector < int64_t > current) {
-  cameraPosition = position;
-  frustum = Frustum(view);
-  currentChunksId = current;
+void OctaTerrain::clear(){
   addChunksId.clear();
   removeChunksId.clear();
   keepChunksId.clear();
   addChunksVertices.clear();
-  addSide(0);
+  currentChunksId.clear();
+}
+
+void OctaTerrain::generate(glm::vec3 position, glm::mat4 view, std::vector < int64_t > current) {
+  cameraPosition = position;
+  frustum = Frustum(view);
+  clear();
+  currentChunksId = current;
+
   for (int i = 0; i < 8; i++)
     addSide(i);
 
