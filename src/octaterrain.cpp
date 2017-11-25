@@ -14,7 +14,10 @@ OctaTerrain::OctaTerrain(float radius, int maxZ, float detail, bool saveVertices
 }
 
 glm::vec2 OctaTerrain::toLatLon(glm::vec3 p) {
-  return glm::vec2(0, 0);
+  float r = sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
+  float lat = asin(p.y/r);
+  float lon = asin(p.x/ r / cos(lat));
+  return glm::vec2(lat, lon);
 }
 
 glm::vec3 OctaTerrain::toPoint(glm::vec2 v) {
