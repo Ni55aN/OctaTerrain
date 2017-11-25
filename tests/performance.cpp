@@ -1,4 +1,6 @@
-#include "../src/octaterrain.h"
+#include "../src/octaterrain.hpp"
+#include "../src/octaterrain.cpp"
+#include <glm/gtc/type_ptr.hpp>
 #include <ctime>
 #include <stdio.h>
 
@@ -10,9 +12,10 @@ int main(int argc, char *argv[]) {
   const clock_t begin_time = clock();
 
   std::vector<int64_t> current;
-  mat4 view = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1};
+  float v[] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1};
+  glm::mat4 view = glm::make_mat4(v);
 
-  terrain->generate(vec3{0, 1, 0}, view, current);
+  terrain->generate(glm::vec3(0, 1, 0), view, current);
 
   auto added = terrain->getAdded().size();
   printf("----\nChunks: %lu with detail = %f\n", added, detail);
